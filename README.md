@@ -41,3 +41,6 @@ local ADDON_PATH  = "interface/JH/"
 
 ### 无法加载
 您可能需要在控制面板，把非Unicode使用的语言更改为United States (English)，并且推荐开启日志记录```./bin/{ version }/logs/```查看报错信息做对应的修改。
+
+###GitBash应用
+首次提交Git https://www.cnblogs.com/eyunhua/p/6502164.html
