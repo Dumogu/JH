@@ -1,5 +1,7 @@
 《剑网3》菊花插件集
 ==================
+本分支用于学习Git和lua插件，以下信息为原版内容，请前往原网址下载：https://github.com/luckyyyyy/JH/archive/dev.zip
+
 本插件适用于国产网游```《剑侠情缘网络版叁》```，由于游戏版本较多，本插件基于```zhcn```版本编译，所有的功能以及API针对于```zhcn```版本，其他版本需要做一些兼容性的修改，可以参考下文的兼容性修改部分。
 
 * 建议反馈：欢迎各位直接pull request，或者打开新的issues，除此之外不接受任何反馈。
@@ -42,5 +44,5 @@ local ADDON_PATH  = "interface/JH/"
 ### 无法加载
 您可能需要在控制面板，把非Unicode使用的语言更改为United States (English)，并且推荐开启日志记录```./bin/{ version }/logs/```查看报错信息做对应的修改。
 
-###GitBash应用
+### GitBash应用
 首次提交Git https://www.cnblogs.com/eyunhua/p/6502164.html
