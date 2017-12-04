@@ -1,0 +1,10 @@
+# ignore list
+*/manifest.dat
+*/manifest.key
+*/publisher.key
+*.dump
+@DATA
+7z.exe
+releases
+JH_DBM/data/DBM-*
+.DS_Store
