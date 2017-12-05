@@ -1,6 +1,6 @@
 《剑网3》菊花插件集
 ==================
-用于学习Git和lua插件，以下信息为原版内容，可前往原网址下载：https://github.com/luckyyyyy/JH/archive/dev.zip
+用于学习GitGui和lua5.1插件，以下信息为原版内容，可前往原网址下载：https://github.com/luckyyyyy/JH/archive/dev.zip
 
 本插件适用于国产网游《剑侠情缘网络版叁》，基于zhcn版本编译
 
