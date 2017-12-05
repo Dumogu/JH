@@ -2,7 +2,7 @@
 -- @Date:   2015-01-21 15:21:19
 -- @Last Modified by:   Administrator
 -- @Last Modified time: 2017-05-29 02:23:38
-local _L = JH.LoadLangPack
+local _L = JH.LoadLangPack  -- Global function
 local _JH_About = {
 	INFO = {},
 }
