@@ -4,3 +4,4 @@ zip.sh               export-ignore
 7zipignore.txt       export-ignore 
 JH_Developer         export-ignore 
 JH_0Base/About.ini   export-ignore 
+.vs
