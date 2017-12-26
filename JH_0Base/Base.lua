@@ -21,7 +21,7 @@ local GetClientPlayer, GetPlayer, GetNpc, GetClientTeam, UI_GetClientPlayerID = 
 local setmetatable = setmetatable
 
 ------------------
---  Addon Path  --
+--  Addon Path  --åˆå§‹åŒ–é»˜è®¤è·¯å¾„
 ------------------
 local ADDON_BASE_PATH   = "Interface/JH/JH_0Base/"
 local ADDON_DATA_PATH   = "Interface/JH/@DATA/"
@@ -53,7 +53,7 @@ local JH_LIST_DOODAD  = {}
 -------------------------------------
 -- EventHandler
 -------------------------------------
-local function EventHandler(szEvent)
+local function EventHandler(szEvent)  -- é”™è¯¯ä¿¡æ¯æœé›†å’Œåé¦ˆ
 	-- local nTime = GetTime()
 	for k, v in pairs(JH_EVENT[szEvent]) do
 		local res, err = pcall(v, szEvent)
@@ -61,7 +61,7 @@ local function EventHandler(szEvent)
 			JH.Debug("EVENT#" .. szEvent .. "." .. k .." ERROR: " .. err)
 		end
 	end
-	-- Èç¹ûÓĞĞÔÄÜÎÊÌâÇëÆôÓÃ
+	-- å¦‚æœæœ‰æ€§èƒ½é—®é¢˜è¯·å¯ç”¨
 	-- Log("[JH] EventHandler " .. szEvent .. " cost:" .. GetTime() - nTime .."ms")
 end
 ---------------------------------------------------------------------
@@ -73,7 +73,7 @@ local function GetLang()
 	local t1 = LoadLUAData(ADDON_BASE_PATH .. "lang/" .. szLang .. ".jx3dat") or {}
 	for k, v in pairs(t0) do
 		if not t1[k] then
-			t1[k] = v
+			t1[k] = v  --é»˜è®¤é€‰æ‹©t0ä¸­çš„å†…å®¹
 		end
 	end
 	t1.__import = function(szPath)
@@ -89,9 +89,9 @@ local function GetLang()
 	setmetatable(t1, mt)
 	return t1
 end
-local _L = GetLang()
+local _L = GetLang() --å°†_Lä½œä¸ºè¯­è¨€è½¬æ¢å‡½æ•°çš„ç®€å†™
 
-local _VERSION_   = 0x1060000
+local _VERSION_   = 0x1060000   --16ä½
 local _BUILD_     = "20170221"
 local _DEBUG_     = IsFileExist(ADDON_DATA_PATH .. "EnableDebug")
 local _LOGLV_     = 2
@@ -103,18 +103,18 @@ local JH_PANEL_SELECT
 local JH_PANEL_ANCHOR      = { s = "CENTER", r = "CENTER", x = 0, y = 0 }
 
 ---------------------------------------------------------------------
--- ²å¼ş¿ªÊ¼
+-- æ’ä»¶å¼€å§‹
 ---------------------------------------------------------------------
 JH = {
-	bDebugClient = false, -- ²âÊÔ¿Í»§¶Ë°æ±¾
-	nChannel     = PLAYER_TALK_CHANNEL.RAID, -- JH.TalkÄ¬ÈÏÆµµÀ
+	bDebugClient = false, -- æµ‹è¯•å®¢æˆ·ç«¯ç‰ˆæœ¬
+	nChannel     = PLAYER_TALK_CHANNEL.RAID, -- JH.Talké»˜è®¤é¢‘é“
 	LoadLangPack = _L,
 }
 
 do
 	if GetVersion and OutputMessage then
 		local exp = { GetVersion() }
-		if (exp and exp[4] == "exp" or exp[4] == "bvt") or EnableDebugEnv then -- µ÷ÊÔÓÃ
+		if (exp and exp[4] == "exp" or exp[4] == "bvt") or EnableDebugEnv then -- è°ƒè¯•ç”¨
 			_DEBUG_ = true
 			OutputMessage("MSG_SYS", " [-- JH --] debug client, enable debug !!\n")
 			OutputMessage("MSG_SYS", " [-- JH --] client version " .. exp[2] .. "\n")
@@ -136,7 +136,7 @@ local _JH = {
 	tOption2     = {},
 }
 
--- (string, number) JH.GetVersion() -- »ñÈ¡²å¼ş°æ±¾ºÅ
+-- (string, number) JH.GetVersion() -- è·å–æ’ä»¶ç‰ˆæœ¬å·
 function _JH.GetVersion()
 	local v = _VERSION_
 	local szVersion = sformat("%d.%d.%d", v / 0x1000000,
@@ -148,11 +148,11 @@ function _JH.GetVersion()
 end
 
 local JH = JH
--- ²å¼ş½çÃæ ÔÚ²»´ò¿ªÊ± ÓÀÔ¶²»³õÊ¼»¯
-function JH.OnFrameCreate()
+-- æ’ä»¶ç•Œé¢ åœ¨ä¸æ‰“å¼€æ—¶ æ°¸è¿œä¸åˆå§‹åŒ–
+function JH.OnFrameCreate() --å®šä¹‰å¹¶åˆå§‹åŒ–ç•Œé¢å‡½æ•°
 	this.bInit = true
-	this:RegisterEvent("UI_SCALED")
-	this:RegisterEvent("CALL_LUA_ERROR")
+	this:RegisterEvent("UI_SCALED") -- æ³¨å†Œç•Œé¢
+	this:RegisterEvent("CALL_LUA_ERROR") -- æ³¨å†ŒæŠ¥é”™ä¿¡æ¯
 end
 
 function JH.OnEvent(szEvent)
@@ -412,7 +412,7 @@ end
 
 function JH.OnMouseEnter()
 	local szName = this:GetName()
-	if szName == "Btn_JH" then -- Ì«¶ñË×ÁË
+	if szName == "Btn_JH" then -- å¤ªæ¶ä¿—äº†
 		local btn = this
 		local t1 = Random(15, 50)
 		local t2 = t1 / 2
@@ -546,7 +546,7 @@ function _JH.OpenPanel(szTitle)
 				date:SetText(_L("Today is %d-%d-%d (%s)", time.year, time.month, time.day, _L[L[time.weekday]]))
 				date:SetFontColor(GetItemFontColorByQuality(col[time.weekday]))
 			end
-			if frame.bInit then -- ¶Ô²»Æğ ios¿ª·¢×ö¶àÁË... ²»¼Ó¸öwelcome²»Êæ·ş
+			if frame.bInit then -- å¯¹ä¸èµ· ioså¼€å‘åšå¤šäº†... ä¸åŠ ä¸ªwelcomeä¸èˆ’æœ
 				local function Init()
 					frame.hTab       = frame:Lookup("WndContainer_Tab")
 					frame.hHome      = frame:Lookup("WndScroll_Home")
@@ -629,15 +629,15 @@ JH.IsOpened    = _JH.IsOpened
 JH.ClosePanel  = _JH.ClosePanel
 JH.TogglePanel = _JH.TogglePanel
 
---------------------------------------- * ³£ÓÃº¯Êı * ---------------------------------------
+--------------------------------------- * å¸¸ç”¨å‡½æ•° * ---------------------------------------
 
--- (void) JH.SetHotKey()               -- ´ò¿ª¿ì½İ¼üÉèÖÃÃæ°å
--- (void) JH.SetHotKey(string szGroup) -- ´ò¿ª¿ì½İ¼üÉèÖÃÃæ°å²¢¶¨Î»µ½ szGroup ·Ö×é£¨²»¿ÉÓÃ£©
+-- (void) JH.SetHotKey()               -- æ‰“å¼€å¿«æ·é”®è®¾ç½®é¢æ¿
+-- (void) JH.SetHotKey(string szGroup) -- æ‰“å¼€å¿«æ·é”®è®¾ç½®é¢æ¿å¹¶å®šä½åˆ° szGroup åˆ†ç»„ï¼ˆä¸å¯ç”¨ï¼‰
 function JH.SetHotKey(szGroup)
 	HotkeyPanel_Open(szGroup or _JH.szTitle)
 end
 
--- (table) JH.GetAddonInfo() -- »ñÈ¡²å¼ş»ù´¡ĞÅÏ¢
+-- (table) JH.GetAddonInfo() -- è·å–æ’ä»¶åŸºç¡€ä¿¡æ¯
 function JH.GetAddonInfo()
 	return {
 		szName      = _JH.szTitle,
@@ -663,7 +663,7 @@ local function JH_GetNpcName(dwTemplateID)
 	end
 	return szName
 end
--- (string) JH.GetTemplateName(KObject KObject[, boolean bEmployer])  -- »ñÈ¡»ò¸ñÊ½»¯NPC¶ÔÏóÕæÊµÃû³Æ
+-- (string) JH.GetTemplateName(KObject KObject[, boolean bEmployer])  -- è·å–æˆ–æ ¼å¼åŒ–NPCå¯¹è±¡çœŸå®åç§°
 -- (string) JH.GetTemplateName(number KObject[, boolean bEmployer])
 function JH.GetTemplateName(KObject, bEmployer)
 	if type(KObject) == "userdata" then
@@ -690,11 +690,11 @@ function JH.GetTemplateName(KObject, bEmployer)
 		return JH_GetNpcName(KObject)
 	end
 end
--- ×¢²áÊÂ¼ş£¬ºÍÏµÍ³µÄÇø±ğÔÚÓÚ¿ÉÒÔÖ¸¶¨Ò»¸ö KEY ·ÀÖ¹¶à´Î¼ÓÔØ
+-- æ³¨å†Œäº‹ä»¶ï¼Œå’Œç³»ç»Ÿçš„åŒºåˆ«åœ¨äºå¯ä»¥æŒ‡å®šä¸€ä¸ª KEY é˜²æ­¢å¤šæ¬¡åŠ è½½
 -- (void) JH.RegisterEvent(string szEvent, func fnAction[, string szKey])
--- szEvent		-- ÊÂ¼ş£¬¿ÉÔÚºóÃæ¼ÓÒ»¸öµã²¢½ô¸úÒ»¸ö±êÊ¶×Ö·û´®ÓÃÓÚ·ÀÖ¹ÖØ¸´»òÈ¡Ïû°ó¶¨£¬Èç LOADING_END.xxx
--- fnAction		-- ÊÂ¼ş´¦Àíº¯Êı£¬arg0 ~ arg9£¬´«Èë nil Ïàµ±ÓÚÈ¡Ïû¸ÃÊÂ¼ş
---ÌØ±ğ×¢Òâ£ºµ± fnAction Îª nil ²¢ÇÒ szKey Ò²Îª nil Ê±»áÈ¡ÏûËùÓĞÍ¨¹ı±¾º¯Êı×¢²áµÄÊÂ¼ş´¦ÀíÆ÷
+-- szEvent		-- äº‹ä»¶ï¼Œå¯åœ¨åé¢åŠ ä¸€ä¸ªç‚¹å¹¶ç´§è·Ÿä¸€ä¸ªæ ‡è¯†å­—ç¬¦ä¸²ç”¨äºé˜²æ­¢é‡å¤æˆ–å–æ¶ˆç»‘å®šï¼Œå¦‚ LOADING_END.xxx
+-- fnAction		-- äº‹ä»¶å¤„ç†å‡½æ•°ï¼Œarg0 ~ arg9ï¼Œä¼ å…¥ nil ç›¸å½“äºå–æ¶ˆè¯¥äº‹ä»¶
+--ç‰¹åˆ«æ³¨æ„ï¼šå½“ fnAction ä¸º nil å¹¶ä¸” szKey ä¹Ÿä¸º nil æ—¶ä¼šå–æ¶ˆæ‰€æœ‰é€šè¿‡æœ¬å‡½æ•°æ³¨å†Œçš„äº‹ä»¶å¤„ç†å™¨
 local function JH_RegisterEvent(szEvent, fnAction)
 	local szKey = nil
 	local nPos = StringFindW(szEvent, ".")
@@ -736,12 +736,12 @@ function JH.RegisterEvent(szEvent, fnAction)
 	end
 end
 
--- È¡ÏûÊÂ¼ş´¦Àíº¯Êı
+-- å–æ¶ˆäº‹ä»¶å¤„ç†å‡½æ•°
 -- (void) JH.UnRegisterEvent(string szEvent)
 function JH.UnRegisterEvent(szEvent)
 	JH.RegisterEvent(szEvent, nil)
 end
--- ×¢²áÓÃ»§¶¨ÒåÊı¾İ£¬Ö§³ÖÈ«¾Ö±äÁ¿Êı×é±éÀú
+-- æ³¨å†Œç”¨æˆ·å®šä¹‰æ•°æ®ï¼Œæ”¯æŒå…¨å±€å˜é‡æ•°ç»„éå†
 -- (void) JH.RegisterCustomData(string szVarPath[, number nVersion])
 function JH.RegisterCustomData(szVarPath, nVersion, szDomain)
 	szDomain = szDomain or "Role"
@@ -753,7 +753,7 @@ function JH.RegisterCustomData(szVarPath, nVersion, szDomain)
 		RegisterCustomData(szDomain .. "/" .. szVarPath, nVersion)
 	end
 end
--- ¿ª·¢º¯Êı ĞŞ¸ÄÈ«¾Ö±äÁ¿
+-- å¼€å‘å‡½æ•° ä¿®æ”¹å…¨å±€å˜é‡
 function _JH.SetGlobalValue(szVarPath, Val)
 	local t = JH.Split(szVarPath, ".")
 	local tab = _G
@@ -767,7 +767,7 @@ function _JH.SetGlobalValue(szVarPath, Val)
 		tab = tab[v]
 	end
 end
--- ³õÊ¼»¯Ò»¸öÄ£¿é
+-- åˆå§‹åŒ–ä¸€ä¸ªæ¨¡å—
 function JH.RegisterInit(key, ...)
 	local events = { ... }
 	if _JH.tModule[key] and IsEmpty(events) then
@@ -1069,7 +1069,7 @@ function JH.GetAllMap()
 	return tList
 end
 
--- ÅĞ¶ÏÒ»¸öµØÍ¼ÊÇ²»ÊÇ¸±±¾
+-- åˆ¤æ–­ä¸€ä¸ªåœ°å›¾æ˜¯ä¸æ˜¯å‰¯æœ¬
 -- (bool) JH.IsDungeonMap(dwMapID, bType)
 function JH.IsDungeon(dwMapID, bType)
 	if bType then
@@ -1087,8 +1087,8 @@ function JH.IsDungeon(dwMapID, bType)
 	end
 end
 
--- »ñÈ¡Ö÷½Çµ±Ç°ËùÔÚµØÍ¼
--- JH.GetMapID(bool bFix) ÊÇ·ñ×öĞŞÕı
+-- è·å–ä¸»è§’å½“å‰æ‰€åœ¨åœ°å›¾
+-- JH.GetMapID(bool bFix) æ˜¯å¦åšä¿®æ­£
 function JH.GetMapID(bFix)
 	local dwMapID = GetClientPlayer().GetMapID()
 	if not bFix then
@@ -1117,7 +1117,7 @@ end
 -- 	return nMapType and nMapType == MAP_TYPE.BATTLE_FIELD
 -- end
 
--- ÅĞ¶ÏÊÇ²»ÊÇ¸±±¾µØÍ¼
+-- åˆ¤æ–­æ˜¯ä¸æ˜¯å‰¯æœ¬åœ°å›¾
 function JH.IsInDungeon(bType)
 	local me = GetClientPlayer()
 	local dwMapID = me.GetMapID()
@@ -1189,13 +1189,13 @@ function JH.JsonToTable(szJson, bUrlEncode)
 	return data, nil
 end
 
--- Êä³öÒ»ÌõÃÜÁÄĞÅÏ¢
+-- è¾“å‡ºä¸€æ¡å¯†èŠä¿¡æ¯
 function JH.OutputWhisper(szMsg, szHead)
 	szHead = szHead or _JH.szShort
 	OutputMessage("MSG_WHISPER", "[" .. szHead .. "]" .. g_tStrings.STR_TALK_HEAD_WHISPER .. szMsg .. "\n")
 	PlaySound(SOUND.UI_SOUND, g_sound.Whisper)
 end
--- Ã»ÓĞÍ·µÄÖĞÑëĞÅÏ¢ Ò²¿ÉÒÔÓÃÓÚÏµÍ³ĞÅÏ¢
+-- æ²¡æœ‰å¤´çš„ä¸­å¤®ä¿¡æ¯ ä¹Ÿå¯ä»¥ç”¨äºç³»ç»Ÿä¿¡æ¯
 function JH.Topmsg(szText, szType)
 	OutputMessage(szType or "MSG_ANNOUNCE_YELLOW", szText .. "\n")
 end
@@ -1290,7 +1290,7 @@ function JH.RegisterMsgMonitor(arg0, arg1, arg2)
 	end
 end
 
--- Ñ¡´úÆ÷ µ¹Ğò
+-- é€‰ä»£å™¨ å€’åº
 local function fnBpairs(tab, nIndex)
 	nIndex = nIndex - 1
 	if nIndex > 0 then
@@ -1390,10 +1390,10 @@ function JH.GetMapName(dwMapID)
 	return JH_CACHE_MAP[dwMapID]
 end
 
--- ¸ù¾İ dwType ÀàĞÍºÍ dwID ÉèÖÃÄ¿±ê
+-- æ ¹æ® dwType ç±»å‹å’Œ dwID è®¾ç½®ç›®æ ‡
 -- (void) JH.SetTarget([number dwType, ]number dwID)
--- dwType	-- *¿ÉÑ¡* Ä¿±êÀàĞÍ
--- dwID		-- Ä¿±ê ID
+-- dwType	-- *å¯é€‰* ç›®æ ‡ç±»å‹
+-- dwID		-- ç›®æ ‡ ID
 function JH.SetTarget(dwType, dwID)
 	if not dwType or dwType <= 0 then
 		dwType, dwID = TARGET.NO_TARGET, 0
@@ -1406,7 +1406,7 @@ function JH.SetTarget(dwType, dwID)
 	SetTarget(dwType, dwID)
 end
 
--- ¸ù¾İBUFF ID »òÕß KBUFF ¶ÔÏó Èç²»´« nLevel »ò nLevel µÈÓÚ0 ´ú±íºöÂÔ nLevel
+-- æ ¹æ®BUFF ID æˆ–è€… KBUFF å¯¹è±¡ å¦‚ä¸ä¼  nLevel æˆ– nLevel ç­‰äº0 ä»£è¡¨å¿½ç•¥ nLevel
 -- (KBUFF) JH.GetBuff(dwBuffID, [nLevel[, KObject me]])
 -- (KBUFF) JH.GetBuff(tBuff, [nLevel[, KObject me]])
 -- KBUFF_LIST_NODE
@@ -1449,7 +1449,7 @@ function JH.CancelBuff( ... )
 		return GetClientPlayer().CancelBuff(tBuff.nIndex)
 	end
 end
--- ¸ñÊ½»¯Ê±¼ä×Ö·û´®
+-- æ ¼å¼åŒ–æ—¶é—´å­—ç¬¦ä¸²
 function JH.FormatTimeString(nSec, nStyle, bDefault)
 	nSec = nSec > 0 and nSec or 0
 	if nStyle == 1 then
@@ -1635,8 +1635,8 @@ function JH.AddHotKey(szName, szTitle, fnAction)
 	end
 	tinsert(_JH.tHotkey, { szName = szName, szTitle = szTitle, fnAction = fnAction })
 end
--- (KObject) JH.GetTarget() -- È¡µÃµ±Ç°Ä¿±ê²Ù×÷¶ÔÏó
--- (KObject) JH.GetTarget([number dwType, ]number dwID)	-- ¸ù¾İ dwType ÀàĞÍºÍ dwID È¡µÃ²Ù×÷¶ÔÏó
+-- (KObject) JH.GetTarget() -- å–å¾—å½“å‰ç›®æ ‡æ“ä½œå¯¹è±¡
+-- (KObject) JH.GetTarget([number dwType, ]number dwID)	-- æ ¹æ® dwType ç±»å‹å’Œ dwID å–å¾—æ“ä½œå¯¹è±¡
 function JH.GetTarget(dwType, dwID)
 	if not dwType then
 		local me = GetClientPlayer()
@@ -1745,15 +1745,15 @@ function _JH.GetAddonMenu()
 	end
 	return { menu }
 end
--- ×¢²áÍæ¼ÒÍ·ÏñµÄ²å¼ş²Ëµ¥
+-- æ³¨å†Œç©å®¶å¤´åƒçš„æ’ä»¶èœå•
 function JH.PlayerAddonMenu(tMenu)
 	tinsert(_JH.tOption, tMenu)
 end
--- ×¢²áÓÒÉÏ½ÇµÄ°âÊÖ²Ëµ¥
+-- æ³¨å†Œå³ä¸Šè§’çš„æ‰³æ‰‹èœå•
 function JH.AddonMenu(tMenu)
 	tinsert(_JH.tOption2, tMenu)
 end
--- ¹ÜÀíÈ«²¿shadowµÄÈİÆ÷ ÕâÑù¿ÉÒÔ·ÀÖ¹Ç°ºóË³Ğò¸²¸Ç
+-- ç®¡ç†å…¨éƒ¨shadowçš„å®¹å™¨ è¿™æ ·å¯ä»¥é˜²æ­¢å‰åé¡ºåºè¦†ç›–
 function JH.GetShadowHandle(szName)
 	local sh = Station.Lookup("Lowest/JH_Shadows") or Wnd.OpenWindow(ADDON_BASE_PATH .. "item/JH_Shadows.ini", "JH_Shadows")
 	if not sh:Lookup("", szName) then
@@ -1766,7 +1766,7 @@ end
 JH.RegisterEvent("PLAYER_ENTER_GAME", function()
 	_JH.OpenPanel()
 	-- _JH.tGlobalValue = JH.LoadLUAData("dev/GlobalValue.jx3dat") or {}
-	-- ×¢²á¿ì½İ¼ü
+	-- æ³¨å†Œå¿«æ·é”®
 	Hotkey.AddBinding("JH_Total", _L["JH Plugin"], _L["JH Plugin"], _JH.TogglePanel , nil)
 	for _, v in ipairs(_JH.tHotkey) do
 		Hotkey.AddBinding(v.szName, v.szTitle, "", v.fnAction, nil)
@@ -1777,9 +1777,9 @@ JH.RegisterEvent("PLAYER_ENTER_GAME", function()
 			GetClientTeam().SetTeamMark(k, dwID)
 		end, nil)
 	end
-	-- ×¢²áÍæ¼ÒÍ·Ïñ²Ëµ¥
+	-- æ³¨å†Œç©å®¶å¤´åƒèœå•
 	Player_AppendAddonMenu({ _JH.GetPlayerAddonMenu })
-	-- ×¢²áÓÒÉÏ½Ç²Ëµ¥
+	-- æ³¨å†Œå³ä¸Šè§’èœå•
 	TraceButton_AppendAddonMenu({ _JH.GetAddonMenu })
 	JH.Sysmsg(_L("%s are welcome to use JH plug-in", GetUserRoleName()) .. "! v" .. _JH.GetVersion())
 end)
@@ -1812,7 +1812,7 @@ JH.RegisterEvent("NPC_ENTER_SCENE",    function() JH_LIST_NPC[arg0]    = true en
 JH.RegisterEvent("NPC_LEAVE_SCENE",    function() JH_LIST_NPC[arg0]    = nil  end)
 JH.RegisterEvent("DOODAD_ENTER_SCENE", function() JH_LIST_DOODAD[arg0] = true end)
 JH.RegisterEvent("DOODAD_LEAVE_SCENE", function() JH_LIST_DOODAD[arg0] = nil  end)
--- ×Ö·û´®Àà
+-- å­—ç¬¦ä¸²ç±»
 function JH.Trim(szText)
 	if not szText or szText == "" then
 		return ""
@@ -1850,7 +1850,7 @@ function JH.AscIIDecode(szText)
 	return szText:gsub('(%x%x)', get_asciidecode)
 end
 
--- ÁÙÊ±Ñ¡Ôñ¼¯ÖĞ´¦Àí
+-- ä¸´æ—¶é€‰æ‹©é›†ä¸­å¤„ç†
 local JH_TAR_TEMP
 local JH_TAR_TEMP_STATUS = false
 
@@ -1859,7 +1859,7 @@ JH.RegisterEvent("JH_TAR_TEMP_UPDATE", function()
 end)
 
 function JH.SetTempTarget(dwMemberID, bEnter)
-	if JH_TAR_TEMP_STATUS == bEnter then -- ·ÀÖ¹Å¼¶ûUIBUG
+	if JH_TAR_TEMP_STATUS == bEnter then -- é˜²æ­¢å¶å°”UIBUG
 		return
 	end
 	JH_TAR_TEMP_STATUS = bEnter
@@ -1883,13 +1883,13 @@ function JH.OutputNpcTip(dwNpcTemplateID, Rect)
 	local szName = JH.GetTemplateName(dwNpcTemplateID)
 	local t = {}
 	tinsert(t, GetFormatText(szName .. "\n", 80, 255, 255, 0))
-		-------------µÈ¼¶----------------------------
+		-------------ç­‰çº§----------------------------
 	if npc.nLevel - GetClientPlayer().nLevel > 10 then
 		tinsert(t, GetFormatText(g_tStrings.STR_PLAYER_H_UNKNOWN_LEVEL, 82))
 	else
 		tinsert(t, GetFormatText(FormatString(g_tStrings.STR_NPC_H_WHAT_LEVEL, npc.nLevel), 0))
 	end
-	------------Ä£°æID-----------------------
+	------------æ¨¡ç‰ˆID-----------------------
 	tinsert(t, GetFormatText(FormatString(g_tStrings.TIP_TEMPLATE_ID_NPC_INTENSITY, npc.dwTemplateID, npc.nIntensity or 1), 101))
 
 	OutputTip(tconcat(t), 345, Rect)
@@ -1901,14 +1901,14 @@ function JH.OutputDoodadTip(dwTemplateID, Rect)
 		return
 	end
 	local t = {}
-	--------------Ãû×Ö-------------------------
+	--------------åå­—-------------------------
 	local szName = doodad.szName ~= "" and doodad.szName or dwTemplateID
 	if doodad.nKind == DOODAD_KIND.CORPSE then
 		szName = szName .. g_tStrings.STR_DOODAD_CORPSE
 	end
 	tinsert(t, GetFormatText(szName .. "\n", 65))
 	tinsert(t, GetDoodadQuestTip(dwTemplateID))
-	------------Ä£°æID-----------------------
+	------------æ¨¡ç‰ˆID-----------------------
 	tinsert(t, GetFormatText(FormatString(g_tStrings.TIP_TEMPLATE_ID, doodad.dwTemplateID), 101))
 	if IsCtrlKeyDown() then
 		tinsert(t, GetFormatText(FormatString(g_tStrings.TIP_REPRESENTID_ID, doodad.dwRepresentID), 102))
@@ -1975,7 +1975,7 @@ function JH.OutputBuffTip(dwID, nLevel, Rect, nTime)
 end
 
 ---------------------------------------------------------------------
--- ¿ÉÖØ¸´ÀûÓÃµÄ¼òÒ× Handle Ôª¼ş»º´æ³Ø
+-- å¯é‡å¤åˆ©ç”¨çš„ç®€æ˜“ Handle å…ƒä»¶ç¼“å­˜æ± 
 ---------------------------------------------------------------------
 local HandlePool = {}
 HandlePool.__index = HandlePool
@@ -2049,7 +2049,7 @@ end
 JH.HandlePool = setmetatable({}, { __call = function(me, ...) return HandlePool:ctor( ... ) end, __metatable = true, __newindex = function() end })
 
 ---------------------------------------------------------------------
--- ±¾µØµÄ UI ×é¼ş¶ÔÏó
+-- æœ¬åœ°çš„ UI ç»„ä»¶å¯¹è±¡
 ---------------------------------------------------------------------
 local _GUI = {}
 -------------------------------------
@@ -2057,7 +2057,7 @@ local _GUI = {}
 -------------------------------------
 _GUI.Base = class()
 
--- (userdata) Instance:Raw()		-- »ñÈ¡Ô­Ê¼´°Ìå/×é¼ş¶ÔÏó
+-- (userdata) Instance:Raw()		-- è·å–åŸå§‹çª—ä½“/ç»„ä»¶å¯¹è±¡
 function _GUI.Base:Raw()
 	if self.type == "Label" then
 		return self.txt
@@ -2065,7 +2065,7 @@ function _GUI.Base:Raw()
 	return self.wnd or self.edit or self.self
 end
 
--- (void) Instance:Remove()		-- É¾³ı×é¼ş
+-- (void) Instance:Remove()		-- åˆ é™¤ç»„ä»¶
 function _GUI.Base:Remove()
 	if self.fnDestroy then
 		local wnd = self.wnd or self.self
@@ -2085,8 +2085,8 @@ function _GUI.Base:Remove()
 	end
 end
 
--- (string) Instance:Name()					-- È¡µÃÃû³Æ
--- (self) Instance:Name(szName)			-- ÉèÖÃÃû³ÆÎª szName ²¢·µ»Ø×ÔÉíÒÔÖ§³Ö´®½Óµ÷ÓÃ
+-- (string) Instance:Name()					-- å–å¾—åç§°
+-- (self) Instance:Name(szName)			-- è®¾ç½®åç§°ä¸º szName å¹¶è¿”å›è‡ªèº«ä»¥æ”¯æŒä¸²æ¥è°ƒç”¨
 function _GUI.Base:Name(szName)
 	if not szName then
 		return self.self:GetName()
@@ -2095,7 +2095,7 @@ function _GUI.Base:Name(szName)
 	return self
 end
 
--- (self) Instance:Toggle([boolean bShow])			-- ÏÔÊ¾/Òş²Ø
+-- (self) Instance:Toggle([boolean bShow])			-- æ˜¾ç¤º/éšè—
 function _GUI.Base:Toggle(bShow)
 	if bShow == false or (not bShow and self.self:IsVisible()) then
 		self.self:Hide()
@@ -2141,8 +2141,8 @@ function _GUI.Base:RegisterClose(fnAction, bNotButton, bNotKeyDown)
 	return self
 end
 
--- (number, number) Instance:Pos()					-- È¡µÃÎ»ÖÃ×ø±ê
--- (self) Instance:Pos(number nX, number nY)	-- ÉèÖÃÎ»ÖÃ×ø±ê
+-- (number, number) Instance:Pos()					-- å–å¾—ä½ç½®åæ ‡
+-- (self) Instance:Pos(number nX, number nY)	-- è®¾ç½®ä½ç½®åæ ‡
 function _GUI.Base:Pos(nX, nY)
 	if not nX then
 		return self.self:GetRelPos()
@@ -2156,15 +2156,15 @@ function _GUI.Base:Pos(nX, nY)
 	return self
 end
 
--- (number, number) Instance:Pos_()			-- È¡µÃÓÒÏÂ½ÇµÄ×ø±ê
+-- (number, number) Instance:Pos_()			-- å–å¾—å³ä¸‹è§’çš„åæ ‡
 function _GUI.Base:Pos_()
 	local nX, nY = self:Pos()
 	local nW, nH = self:Size()
 	return nX + nW, nY + nH
 end
 
--- (number, number) Instance:CPos_()			-- È¡µÃ×îºóÒ»¸ö×ÓÔªËØÓÒÏÂ½Ç×ø±ê
--- ÌØ±ğ×¢Òâ£º½ö¶ÔÍ¨¹ı :Append() ×·¼ÓµÄÔªËØÓĞĞ§£¬ÒÔ±ãÓÃÓÚ¶¯Ì¬¶¨Î»
+-- (number, number) Instance:CPos_()			-- å–å¾—æœ€åä¸€ä¸ªå­å…ƒç´ å³ä¸‹è§’åæ ‡
+-- ç‰¹åˆ«æ³¨æ„ï¼šä»…å¯¹é€šè¿‡ :Append() è¿½åŠ çš„å…ƒç´ æœ‰æ•ˆï¼Œä»¥ä¾¿ç”¨äºåŠ¨æ€å®šä½
 function _GUI.Base:CPos_()
 	local hP = self.wnd or self.self
 	if not hP.___last and ssub(hP:GetType(), 1, 3) == "Wnd" then
@@ -2179,8 +2179,8 @@ function _GUI.Base:CPos_()
 	return 0, 0
 end
 
--- (class) Instance:Append(string szType, ...)	-- Ìí¼Ó UI ×Ó×é¼ş
--- NOTICE£ºonly for Handle£¬WndXXX
+-- (class) Instance:Append(string szType, ...)	-- æ·»åŠ  UI å­ç»„ä»¶
+-- NOTICEï¼šonly for Handleï¼ŒWndXXX
 function _GUI.Base:Append(szType, ...)
 	local hP = self.wnd or self.self
 	if ssub(hP:GetType(), 1, 3) == "Wnd" and ssub(szType, 1, 3) ~= "Wnd" then
@@ -2190,7 +2190,7 @@ function _GUI.Base:Append(szType, ...)
 	return GUI.Append(hP, szType, ...)
 end
 
--- (class) Instance:Fetch(string szName)	-- ¸ù¾İÃû³Æ»ñÈ¡ UI ×Ó×é¼ş
+-- (class) Instance:Fetch(string szName)	-- æ ¹æ®åç§°è·å– UI å­ç»„ä»¶
 function _GUI.Base:Fetch(szName)
 	local hP = self.wnd or self.self
 	local ui = GUI.Fetch(hP, szName)
@@ -2302,8 +2302,8 @@ function _GUI.Frame:OnEvent(fnAction)
 	return self
 end
 
--- (string) Instance:Title()					-- È¡µÃ´°Ìå±êÌâ
--- (self) Instance:Title(string szTitle)	-- ÉèÖÃ´°Ìå±êÌâ
+-- (string) Instance:Title()					-- å–å¾—çª—ä½“æ ‡é¢˜
+-- (self) Instance:Title(string szTitle)	-- è®¾ç½®çª—ä½“æ ‡é¢˜
 function _GUI.Frame:Title(szTitle)
 	local ttl = self.self:Lookup("", "Text_Title")
 	if not szTitle then
@@ -2313,8 +2313,8 @@ function _GUI.Frame:Title(szTitle)
 	return self
 end
 
--- (boolean) Instance:Drag()						-- ÅĞ¶Ï´°ÌåÊÇ·ñ¿ÉÍÏÒÆ
--- (self) Instance:Drag(boolean bEnable)	-- ÉèÖÃ´°ÌåÊÇ·ñ¿ÉÍÏÒÆ
+-- (boolean) Instance:Drag()						-- åˆ¤æ–­çª—ä½“æ˜¯å¦å¯æ‹–ç§»
+-- (self) Instance:Drag(boolean bEnable)	-- è®¾ç½®çª—ä½“æ˜¯å¦å¯æ‹–ç§»
 function _GUI.Frame:Drag(bEnable)
 	local frm = self.self
 	if bEnable == nil then
@@ -2385,8 +2385,8 @@ function _GUI.Frm:ctor(szName, bEmpty)
 	self.self, self.type = frm, "WndFrame"
 end
 
--- (number, number) Instance:Size()						-- È¡µÃ´°Ìå¿íºÍ¸ß
--- (self) Instance:Size(number nW, number nH)	-- ÉèÖÃ´°ÌåµÄ¿íºÍ¸ß
+-- (number, number) Instance:Size()						-- å–å¾—çª—ä½“å®½å’Œé«˜
+-- (self) Instance:Size(number nW, number nH)	-- è®¾ç½®çª—ä½“çš„å®½å’Œé«˜
 function _GUI.Frm:Size(nW, nH)
 	local frm = self.self
 	if not nW then
@@ -2696,7 +2696,7 @@ end
 
 -- (boolean) Instance:Check()
 -- (self) Instance:Check(boolean bCheck)
--- NOTICE£ºonly for WndCheckBox
+-- NOTICEï¼šonly for WndCheckBox
 function _GUI.Wnd:Check(bCheck)
 	local wnd = self.self
 	if wnd:GetType() == "WndCheckBox" then
@@ -2710,7 +2710,7 @@ end
 
 -- (string) Instance:Group()
 -- (self) Instance:Group(string szGroup)
--- NOTICE£ºonly for WndCheckBox
+-- NOTICEï¼šonly for WndCheckBox
 function _GUI.Wnd:Group(szGroup)
 	local wnd = self.self
 	if wnd:GetType() == "WndCheckBox" then
@@ -2724,7 +2724,7 @@ end
 
 -- (string) Instance:Url()
 -- (self) Instance:Url(string szUrl)
--- NOTICE£ºonly for WndWebPage
+-- NOTICEï¼šonly for WndWebPage
 function _GUI.Wnd:Url(szUrl)
 	local wnd = self.self
 	if self.type == "WndWebPage" then
@@ -2738,7 +2738,7 @@ end
 
 -- (number, number, number) Instance:Range()
 -- (self) Instance:Range(number nMin, number nMax[, number nStep])
--- NOTICE£ºonly for WndTrackBar
+-- NOTICEï¼šonly for WndTrackBar
 function _GUI.Wnd:Range(nMin, nMax, nStep)
 	if self.type == "WndTrackBar" then
 		local scroll = self.self:Lookup("Scroll_Track")
@@ -2758,7 +2758,7 @@ end
 
 -- (number) Instance:Value()
 -- (self) Instance:Value(number nVal)
--- NOTICE£ºonly for WndTrackBar
+-- NOTICEï¼šonly for WndTrackBar
 function _GUI.Wnd:Value(nVal)
 	if self.type == "WndTrackBar" then
 		local scroll = self.self:Lookup("Scroll_Track")
@@ -2777,7 +2777,7 @@ end
 
 -- (string) Instance:Text()
 -- (self) Instance:Text(string szText[, boolean bDummy])
--- bDummy		-- ÉèÎª true ²»´¥·¢ÊäÈë¿òµÄ onChange ÊÂ¼ş
+-- bDummy		-- è®¾ä¸º true ä¸è§¦å‘è¾“å…¥æ¡†çš„ onChange äº‹ä»¶
 function _GUI.Wnd:Text(szText, bDummy)
 	local txt = self.edit or self.txt
 	if txt then
@@ -2844,7 +2844,7 @@ function _GUI.Wnd:Autocomplete(fnTable, fnCallBack, fnRecovery, nMaxOption)
 		local Autocomplete = function()
 			local tList, tTab  = {}, {}
 			local szText = this:GetText()
-			szText = string.gsub(szText, "[%[%]]", "") -- ¹ıÂË [xxx] Îª xxx
+			szText = string.gsub(szText, "[%[%]]", "") -- è¿‡æ»¤ [xxx] ä¸º xxx
 			if type(fnTable) == "function" then
 				tTab = fnTable(szText)
 			else
@@ -2920,7 +2920,7 @@ function _GUI.Wnd:Autocomplete(fnTable, fnCallBack, fnRecovery, nMaxOption)
 					end
 				end
 				PopupMenu(menu)
-				-- PopupMenu_ProcessHotkey("Down") -- »¹ÊÇ²»¼ÓµÄºÃ
+				-- PopupMenu_ProcessHotkey("Down") -- è¿˜æ˜¯ä¸åŠ çš„å¥½
 			end
 			if fnCallBack then
 				fnCallBack(szText)
@@ -2956,7 +2956,7 @@ function _GUI.Wnd:Autocomplete(fnTable, fnCallBack, fnRecovery, nMaxOption)
 				end
 			end
 		end
-		wnd.OnKillFocus = function() -- ÕâÀïÊÇÇĞ»»edit
+		wnd.OnKillFocus = function() -- è¿™é‡Œæ˜¯åˆ‡æ¢edit
 			if IsPopupMenuOpened() then
 				local frame = Station.GetFocusWindow()
 				if frame and frame:GetName() ~= "PopupMenuPanel" then
@@ -2968,9 +2968,9 @@ function _GUI.Wnd:Autocomplete(fnTable, fnCallBack, fnRecovery, nMaxOption)
 	return self
 end
 
--- (self) Instance:Change()			-- ´¥·¢±à¼­¿òĞŞ¸Ä´¦Àíº¯Êı
+-- (self) Instance:Change()			-- è§¦å‘ç¼–è¾‘æ¡†ä¿®æ”¹å¤„ç†å‡½æ•°
 -- (self) Instance:Change(func fnAction)
--- NOTICE£ºonly for WndEdit£¬WndTrackBar
+-- NOTICEï¼šonly for WndEditï¼ŒWndTrackBar
 function _GUI.Wnd:Change(fnAction)
 	if self.type == "WndTrackBar" then
 		self.self:Lookup("Scroll_Track").OnScrollBarPosChanged_ = fnAction
@@ -3001,7 +3001,7 @@ end
 
 -- (self) Instance:Focus()
 -- (self) Instance:Focus(func fnFocus[, func fnKillFocus])
--- NOTICE£ºonly for WndWindow, WndEdit
+-- NOTICEï¼šonly for WndWindow, WndEdit
 function _GUI.Wnd:Focus(fnFocus, fnKillFocus)
 	local wnd = self.self
 	if self.type == "WndEdit" then
@@ -3017,8 +3017,8 @@ function _GUI.Wnd:Focus(fnFocus, fnKillFocus)
 	return self
 end
 
--- (self) Instance:Menu(table menu)		-- ÉèÖÃÏÂÀ­²Ëµ¥
--- NOTICE£ºonly for WndComboBox
+-- (self) Instance:Menu(table menu)		-- è®¾ç½®ä¸‹æ‹‰èœå•
+-- NOTICEï¼šonly for WndComboBox
 function _GUI.Wnd:Menu(menu)
 	if self.type == "WndComboBox" then
 		local wnd = self.self
@@ -3041,8 +3041,8 @@ function _GUI.Wnd:Menu(menu)
 end
 
 -- (self) Instance:Click()
--- (self) Instance:Click(func fnAction)	-- ÉèÖÃ×é¼şµã»÷ºó´¥·¢Ö´ĞĞµÄº¯Êı
--- fnAction = function([bCheck])			-- ¶ÔÓÚ WndCheckBox »á´«Èë bCheck ´ú±íÊÇ·ñ¹´Ñ¡
+-- (self) Instance:Click(func fnAction)	-- è®¾ç½®ç»„ä»¶ç‚¹å‡»åè§¦å‘æ‰§è¡Œçš„å‡½æ•°
+-- fnAction = function([bCheck])			-- å¯¹äº WndCheckBox ä¼šä¼ å…¥ bCheck ä»£è¡¨æ˜¯å¦å‹¾é€‰
 function _GUI.Wnd:Click(fnAction)
 	local wnd = self.self
 	if self.type == "WndComboBox" then
@@ -3088,9 +3088,9 @@ function _GUI.Wnd:Click(fnAction)
 	return self
 end
 
--- (self) Instance:Hover(func fnEnter[, func fnLeave])	-- ÉèÖÃÊó±ê½ø³ö´¦Àíº¯Êı
--- fnEnter = function(true)		-- Êó±ê½øÈëÊ±µ÷ÓÃ
--- fnLeave = function(false)		-- Êó±êÒÆ³öÊ±µ÷ÓÃ£¬ÈôÊ¡ÂÔÔòºÍ½øÈëº¯ÊıÒ»Ñù
+-- (self) Instance:Hover(func fnEnter[, func fnLeave])	-- è®¾ç½®é¼ æ ‡è¿›å‡ºå¤„ç†å‡½æ•°
+-- fnEnter = function(true)		-- é¼ æ ‡è¿›å…¥æ—¶è°ƒç”¨
+-- fnLeave = function(false)		-- é¼ æ ‡ç§»å‡ºæ—¶è°ƒç”¨ï¼Œè‹¥çœç•¥åˆ™å’Œè¿›å…¥å‡½æ•°ä¸€æ ·
 function _GUI.Wnd:Hover(fnEnter, fnLeave)
 	local wnd = self.self
 	if self.type == "WndComboBox" then
@@ -3225,8 +3225,8 @@ function _GUI.Item:AutoSize()
 	return self
 end
 
--- (self) Instance:Zoom(boolean bEnable)	-- ÊÇ·ñÆôÓÃµã»÷ºó·Å´ó
--- NOTICE£ºonly for BoxButton
+-- (self) Instance:Zoom(boolean bEnable)	-- æ˜¯å¦å¯ç”¨ç‚¹å‡»åæ”¾å¤§
+-- NOTICEï¼šonly for BoxButton
 function _GUI.Item:Zoom(bEnable)
 	local hnd = self.self
 	if self.type == "BoxButton" then
@@ -3245,8 +3245,8 @@ function _GUI.Item:Zoom(bEnable)
 	return self
 end
 
--- (self) Instance:Select()		-- ¼¤»îÑ¡ÖĞµ±Ç°°´Å¦£¬½øĞĞÌØĞ§´¦Àí
--- NOTICE£ºonly for BoxButton£¬TxtButton
+-- (self) Instance:Select()		-- æ¿€æ´»é€‰ä¸­å½“å‰æŒ‰çº½ï¼Œè¿›è¡Œç‰¹æ•ˆå¤„ç†
+-- NOTICEï¼šonly for BoxButtonï¼ŒTxtButton
 function _GUI.Item:Select()
 	local hnd = self.self
 	if self.type == "BoxButton" or self.type == "TxtButton" then
@@ -3329,7 +3329,7 @@ end
 
 -- (boolean) Instance:Multi()
 -- (self) Instance:Multi(boolean bEnable)
--- NOTICE: only for Text£¬Label
+-- NOTICE: only for Textï¼ŒLabel
 function _GUI.Item:Multi(bEnable)
 	local txt = self.txt
 	if txt then
@@ -3344,7 +3344,7 @@ end
 -- (self) Instance:File(string szUitexFile, number nFrame)
 -- (self) Instance:File(string szTextureFile)
 -- (self) Instance:File(number dwIcon)
--- NOTICE£ºonly for Image£¬BoxButton
+-- NOTICEï¼šonly for Imageï¼ŒBoxButton
 function _GUI.Item:File(szFile, nFrame)
 	local img = nil
 	if self.type == "Image" then
@@ -3382,8 +3382,8 @@ function _GUI.Item:Animate(szImage, nGroup, nLoopCount)
 end
 
 -- (self) Instance:Type()
--- (self) Instance:Type(number nType)		-- ĞŞ¸ÄÍ¼Æ¬ÀàĞÍ»ò BoxButton µÄ±³¾°ÀàĞÍ
--- NOTICE£ºonly for Image£¬BoxButton
+-- (self) Instance:Type(number nType)		-- ä¿®æ”¹å›¾ç‰‡ç±»å‹æˆ– BoxButton çš„èƒŒæ™¯ç±»å‹
+-- NOTICEï¼šonly for Imageï¼ŒBoxButton
 function _GUI.Item:Type(nType)
 	local hnd = self.self
 	if self.type == "Image" then
@@ -3418,7 +3418,7 @@ function _GUI.Item:Type(nType)
 end
 
 -- (self) Instance:ToGray(bGray)
--- NOTICE£ºonly for Box
+-- NOTICEï¼šonly for Box
 function _GUI.Item:ToGray(bGray)
 	if self.type == "Box" then
 		if bGray then
@@ -3430,13 +3430,13 @@ function _GUI.Item:ToGray(bGray)
 	return self
 end
 -- (self) Instance:ItemInfo( ... )
--- NOTICE£ºonly for Box
+-- NOTICEï¼šonly for Box
 function _GUI.Item:ItemInfo( ... )
 	if self.type == "Box" then
 		if IsEmpty({ ... }) then
 			UpdataItemBoxObject(self.self)
 		else
-			local res, err = pcall(UpdataItemInfoBoxObject, self.self, ...) -- ·ÀÖ¹itemtab²»Ò»Ñù
+			local res, err = pcall(UpdataItemInfoBoxObject, self.self, ...) -- é˜²æ­¢itemtabä¸ä¸€æ ·
 			if not res then
 				JH.Debug(err)
 			end
@@ -3449,7 +3449,7 @@ function _GUI.Item:BoxInfo(nType, ...)
 		if IsEmpty({ ... }) then
 			UpdataItemBoxObject(self.self)
 		else
-			local res, err = pcall(UpdateBoxObject, self.self, nType, ...) -- ·ÀÖ¹itemtab²»Ò»Ñù
+			local res, err = pcall(UpdateBoxObject, self.self, nType, ...) -- é˜²æ­¢itemtabä¸ä¸€æ ·
 			if not res then
 				JH.Debug(err)
 			end
@@ -3458,7 +3458,7 @@ function _GUI.Item:BoxInfo(nType, ...)
 	return self
 end
 -- (self) Instance:Icon(number dwIcon)
--- NOTICE£ºonly for Box£¬Image£¬BoxButton
+-- NOTICEï¼šonly for Boxï¼ŒImageï¼ŒBoxButton
 function _GUI.Item:Icon(dwIcon)
 	if self.type == "BoxButton" or self.type == "Image" then
 		if type(dwIcon) == "number" then
@@ -3551,8 +3551,8 @@ function _GUI.Item:Enable(bEnable)
 end
 
 -- (self) Instance:Click()
--- (self) Instance:Click(func fnAction[, boolean bSound[, boolean bSelect]])	-- µÇ¼ÇÊó±êµã»÷´¦Àíº¯Êı
--- (self) Instance:Click(func fnAction[, table tLinkColor[, tHoverColor]])		-- Í¬ÉÏ£¬Ö»¶ÔÎÄ±¾
+-- (self) Instance:Click(func fnAction[, boolean bSound[, boolean bSelect]])	-- ç™»è®°é¼ æ ‡ç‚¹å‡»å¤„ç†å‡½æ•°
+-- (self) Instance:Click(func fnAction[, table tLinkColor[, tHoverColor]])		-- åŒä¸Šï¼Œåªå¯¹æ–‡æœ¬
 function _GUI.Item:Click(fnAction, bSound, bSelect)
 	local hnd = self.self
 	hnd:RegisterEvent(0x10)
@@ -3571,7 +3571,7 @@ function _GUI.Item:Click(fnAction, bSound, bSelect)
 		end
 	else
 		hnd.OnItemLButtonClick = fnAction
-		-- text link£ºtLinkColor£¬tHoverColor
+		-- text linkï¼štLinkColorï¼ŒtHoverColor
 		local txt = self.txt
 		if txt then
 			local tLinkColor = bSound or { 255, 255, 0 }
@@ -3595,9 +3595,9 @@ function _GUI.Item:Click(fnAction, bSound, bSelect)
 	return self
 end
 
--- (self) Instance:Hover(func fnEnter[, func fnLeave])	-- ÉèÖÃÊó±ê½ø³ö´¦Àíº¯Êı
--- fnEnter = function(true)		-- Êó±ê½øÈëÊ±µ÷ÓÃ
--- fnLeave = function(false)		-- Êó±êÒÆ³öÊ±µ÷ÓÃ£¬ÈôÊ¡ÂÔÔòºÍ½øÈëº¯ÊıÒ»Ñù
+-- (self) Instance:Hover(func fnEnter[, func fnLeave])	-- è®¾ç½®é¼ æ ‡è¿›å‡ºå¤„ç†å‡½æ•°
+-- fnEnter = function(true)		-- é¼ æ ‡è¿›å…¥æ—¶è°ƒç”¨
+-- fnLeave = function(false)		-- é¼ æ ‡ç§»å‡ºæ—¶è°ƒç”¨ï¼Œè‹¥çœç•¥åˆ™å’Œè¿›å…¥å‡½æ•°ä¸€æ ·
 function _GUI.Item:Hover(fnEnter, fnLeave)
 	local hnd = self.self
 	hnd:RegisterEvent(0x100)
@@ -3612,25 +3612,25 @@ function _GUI.Item:Hover(fnEnter, fnLeave)
 end
 
 ---------------------------------------------------------------------
--- ¹«¿ªµÄ API£ºGUI.xxx
+-- å…¬å¼€çš„ APIï¼šGUI.xxx
 ---------------------------------------------------------------------
 GUI = {}
 setmetatable(GUI, { __call = function(me, ...) return me.Fetch(...) end, __metatable = true })
 
--- ¿ªÆôÒ»¸ö¿ÕµÄ¶Ô»°´°Ìå½çÃæ£¬²¢·µ»Ø GUI ·â×°¶ÔÏó
+-- å¼€å¯ä¸€ä¸ªç©ºçš„å¯¹è¯çª—ä½“ç•Œé¢ï¼Œå¹¶è¿”å› GUI å°è£…å¯¹è±¡
 -- (class) GUI.CreateFrame([string szName, ]table tArg)
--- szName		-- *¿ÉÑ¡* Ãû³Æ£¬ÈôÊ¡ÂÔÔò×Ô¶¯±àĞòºÅ
--- tArg {			-- *¿ÉÑ¡* ³õÊ¼»¯ÅäÖÃ²ÎÊı£¬×Ô¶¯µ÷ÓÃÏàÓ¦µÄ·â×°·½·¨£¬ËùÓĞÊôĞÔ¾ù¿ÉÑ¡
---		w, h,			-- ¿íºÍ¸ß£¬³É¶Ô³öÏÖÓÃÓÚÖ¸¶¨´óĞ¡£¬×¢Òâ¿í¶È»á×Ô¶¯±»¾Í½üµ÷½ÚÎª£º770/380/234£¬¸ß¶È×îĞ¡ 200
---		x, y,			-- Î»ÖÃ×ø±ê£¬Ä¬ÈÏÔÚÆÁÄ»ÕıÖĞ¼ä
---		title			-- ´°Ìå±êÌâ
---		drag			-- ÉèÖÃ´°ÌåÊÇ·ñ¿ÉÍÏ¶¯
---		close		-- µã»÷¹Ø±Õ°´Å¦ÊÇÊÇ·ñÕæÕı¹Ø±Õ´°Ìå£¨ÈôÎª false ÔòÊÇÒş²Ø£©
---		empty		-- ´´½¨¿Õ´°Ìå£¬²»´ø±³¾°£¬È«Í¸Ã÷£¬Ö»ÊÇ½çÃæĞèÇó
---		fnCreate = function(frame)		-- ´ò¿ª´°ÌåºóµÄ³õÊ¼»¯º¯Êı£¬frame ÎªÄÚÈİ´°Ìå£¬ÔÚ´ËÉè¼Æ UI
---		fnDestroy = function(frame)	-- ¹Ø±ÕÏú»Ù´°ÌåÊ±µ÷ÓÃ£¬frame ÎªÄÚÈİ´°Ìå£¬¿ÉÔÚ´ËÇåÀí±äÁ¿
+-- szName		-- *å¯é€‰* åç§°ï¼Œè‹¥çœç•¥åˆ™è‡ªåŠ¨ç¼–åºå·
+-- tArg {			-- *å¯é€‰* åˆå§‹åŒ–é…ç½®å‚æ•°ï¼Œè‡ªåŠ¨è°ƒç”¨ç›¸åº”çš„å°è£…æ–¹æ³•ï¼Œæ‰€æœ‰å±æ€§å‡å¯é€‰
+--		w, h,			-- å®½å’Œé«˜ï¼Œæˆå¯¹å‡ºç°ç”¨äºæŒ‡å®šå¤§å°ï¼Œæ³¨æ„å®½åº¦ä¼šè‡ªåŠ¨è¢«å°±è¿‘è°ƒèŠ‚ä¸ºï¼š770/380/234ï¼Œé«˜åº¦æœ€å° 200
+--		x, y,			-- ä½ç½®åæ ‡ï¼Œé»˜è®¤åœ¨å±å¹•æ­£ä¸­é—´
+--		title			-- çª—ä½“æ ‡é¢˜
+--		drag			-- è®¾ç½®çª—ä½“æ˜¯å¦å¯æ‹–åŠ¨
+--		close		-- ç‚¹å‡»å…³é—­æŒ‰çº½æ˜¯æ˜¯å¦çœŸæ­£å…³é—­çª—ä½“ï¼ˆè‹¥ä¸º false åˆ™æ˜¯éšè—ï¼‰
+--		empty		-- åˆ›å»ºç©ºçª—ä½“ï¼Œä¸å¸¦èƒŒæ™¯ï¼Œå…¨é€æ˜ï¼Œåªæ˜¯ç•Œé¢éœ€æ±‚
+--		fnCreate = function(frame)		-- æ‰“å¼€çª—ä½“åçš„åˆå§‹åŒ–å‡½æ•°ï¼Œframe ä¸ºå†…å®¹çª—ä½“ï¼Œåœ¨æ­¤è®¾è®¡ UI
+--		fnDestroy = function(frame)	-- å…³é—­é”€æ¯çª—ä½“æ—¶è°ƒç”¨ï¼Œframe ä¸ºå†…å®¹çª—ä½“ï¼Œå¯åœ¨æ­¤æ¸…ç†å˜é‡
 -- }
--- ·µ»ØÖµ£ºÍ¨ÓÃµÄ  GUI ¶ÔÏó£¬¿ÉÖ±½Óµ÷ÓÃ·â×°·½·¨
+-- è¿”å›å€¼ï¼šé€šç”¨çš„  GUI å¯¹è±¡ï¼Œå¯ç›´æ¥è°ƒç”¨å°è£…æ–¹æ³•
 function GUI.CreateFrame(szName, tArg)
 	if type(szName) == "table" then
 		szName, tArg = nil, szName
@@ -3653,19 +3653,19 @@ function GUI.CreateFrame(szName, tArg)
 	return ui
 end
 
--- ´´½¨¿Õ´°Ìå
+-- åˆ›å»ºç©ºçª—ä½“
 function GUI.CreateFrameEmpty(szName, szParent)
 	return GUI.CreateFrame(szName, { empty  = true, parent = szParent })
 end
 
--- ÍùÄ³Ò»¸¸´°Ìå»òÈİÆ÷Ìí¼Ó  INI ÅäÖÃÎÄ¼şÖĞµÄ²¿·Ö£¬²¢·µ»Ø GUI ·â×°¶ÔÏó
+-- å¾€æŸä¸€çˆ¶çª—ä½“æˆ–å®¹å™¨æ·»åŠ   INI é…ç½®æ–‡ä»¶ä¸­çš„éƒ¨åˆ†ï¼Œå¹¶è¿”å› GUI å°è£…å¯¹è±¡
 -- (class) GUI.Append(userdata hParent, string szIniFile, string szTag, string szName)
--- hParent		-- ¸¸´°Ìå»òÈİÆ÷Ô­Ê¼¶ÔÏó£¨GUI ¶ÔÏóÇëÖ±½ÓÓÃ  :Append ·½·¨£©
--- szIniFile		-- INI ÎÄ¼şÂ·¾¶
--- szTag			-- ÒªÌí¼ÓµÄ¶ÔÏóÔ´£¬¼´ÖĞÀ¨ºÅÄÚµÄ²¿·Ö [XXXX]£¬ÇëÓë hParent Æ¥Åä²ÉÓÃ Wnd »òÈİÆ÷×é¼ş
--- szName		-- *¿ÉÑ¡* ¶ÔÏóÃû³Æ£¬Èô²»Ö¸¶¨ÔòÑØÓÃÔ­Ãû³Æ
--- ·µ»ØÖµ£ºÍ¨ÓÃµÄ  GUI ¶ÔÏó£¬¿ÉÖ±½Óµ÷ÓÃ·â×°·½·¨£¬Ê§°Ü»ò³ö´í·µ»Ø nil
--- ÌØ±ğ×¢Òâ£ºÕâ¸öº¯ÊıÒ²Ö§³ÖÌí¼Ó´°Ìå¶ÔÏó
+-- hParent		-- çˆ¶çª—ä½“æˆ–å®¹å™¨åŸå§‹å¯¹è±¡ï¼ˆGUI å¯¹è±¡è¯·ç›´æ¥ç”¨  :Append æ–¹æ³•ï¼‰
+-- szIniFile		-- INI æ–‡ä»¶è·¯å¾„
+-- szTag			-- è¦æ·»åŠ çš„å¯¹è±¡æºï¼Œå³ä¸­æ‹¬å·å†…çš„éƒ¨åˆ† [XXXX]ï¼Œè¯·ä¸ hParent åŒ¹é…é‡‡ç”¨ Wnd æˆ–å®¹å™¨ç»„ä»¶
+-- szName		-- *å¯é€‰* å¯¹è±¡åç§°ï¼Œè‹¥ä¸æŒ‡å®šåˆ™æ²¿ç”¨åŸåç§°
+-- è¿”å›å€¼ï¼šé€šç”¨çš„  GUI å¯¹è±¡ï¼Œå¯ç›´æ¥è°ƒç”¨å°è£…æ–¹æ³•ï¼Œå¤±è´¥æˆ–å‡ºé”™è¿”å› nil
+-- ç‰¹åˆ«æ³¨æ„ï¼šè¿™ä¸ªå‡½æ•°ä¹Ÿæ”¯æŒæ·»åŠ çª—ä½“å¯¹è±¡
 function GUI.AppendIni(hParent, szFile, szTag, szName)
 	local raw = nil
 	if hParent:GetType() == "Handle" then
@@ -3692,23 +3692,23 @@ function GUI.AppendIni(hParent, szFile, szTag, szName)
 	return GUI.Fetch(raw)
 end
 
--- ÍùÄ³Ò»¸¸´°Ìå»òÈİÆ÷Ìí¼Ó GUI ×é¼ş²¢·µ»Ø·â×°¶ÔÏó
+-- å¾€æŸä¸€çˆ¶çª—ä½“æˆ–å®¹å™¨æ·»åŠ  GUI ç»„ä»¶å¹¶è¿”å›å°è£…å¯¹è±¡
 -- (class) GUI.Append(userdata hParent, string szType[, string szName], table tArg)
--- hParent		-- ¸¸´°Ìå»òÈİÆ÷Ô­Ê¼¶ÔÏó£¨GUI ¶ÔÏóÇëÖ±½ÓÓÃ  :Append ·½·¨£©
--- szType			-- ÒªÌí¼ÓµÄ×é¼şÀàĞÍ£¨Èç£ºWndWindow£¬WndEdit£¬Handle£¬Text ¡­¡­£©
--- szName		-- *¿ÉÑ¡* Ãû³Æ£¬ÈôÊ¡ÂÔÔò×Ô¶¯±àĞòºÅ
--- tArg {			-- *¿ÉÑ¡* ³õÊ¼»¯ÅäÖÃ²ÎÊı£¬×Ô¶¯µ÷ÓÃÏàÓ¦µÄ·â×°·½·¨£¬ËùÓĞÊôĞÔ¾ù¿ÉÑ¡£¬Èç¹ûÃ»ÓÃÔòºöÂÔ
---		w, h,			-- ¿íºÍ¸ß£¬³É¶Ô³öÏÖÓÃÓÚÖ¸¶¨´óĞ¡
---		x, y,			-- Î»ÖÃ×ø±ê
---		txt, font, multi, limit, align		-- ÎÄ±¾ÄÚÈİ£¬×ÖÌå£¬ÊÇ·ñ¶àĞĞ£¬³¤¶ÈÏŞÖÆ£¬¶ÔÆë·½Ê½£¨0£º×ó£¬1£ºÖĞ£¬2£ºÓÒ£©
---		color, alpha			-- ÑÕÉ«£¬²»Í¸Ã÷¶È
---		checked				-- ÊÇ·ñ¹´Ñ¡£¬CheckBox ×¨ÓÃ
---		enable					-- ÊÇ·ñÆôÓÃ
---		file, icon, type		-- Í¼Æ¬ÎÄ¼şµØÖ·£¬Í¼±ê±àºÅ£¬ÀàĞÍ
---		group					-- µ¥Ñ¡¿ò·Ö×éÉèÖÃ
+-- hParent		-- çˆ¶çª—ä½“æˆ–å®¹å™¨åŸå§‹å¯¹è±¡ï¼ˆGUI å¯¹è±¡è¯·ç›´æ¥ç”¨  :Append æ–¹æ³•ï¼‰
+-- szType			-- è¦æ·»åŠ çš„ç»„ä»¶ç±»å‹ï¼ˆå¦‚ï¼šWndWindowï¼ŒWndEditï¼ŒHandleï¼ŒText â€¦â€¦ï¼‰
+-- szName		-- *å¯é€‰* åç§°ï¼Œè‹¥çœç•¥åˆ™è‡ªåŠ¨ç¼–åºå·
+-- tArg {			-- *å¯é€‰* åˆå§‹åŒ–é…ç½®å‚æ•°ï¼Œè‡ªåŠ¨è°ƒç”¨ç›¸åº”çš„å°è£…æ–¹æ³•ï¼Œæ‰€æœ‰å±æ€§å‡å¯é€‰ï¼Œå¦‚æœæ²¡ç”¨åˆ™å¿½ç•¥
+--		w, h,			-- å®½å’Œé«˜ï¼Œæˆå¯¹å‡ºç°ç”¨äºæŒ‡å®šå¤§å°
+--		x, y,			-- ä½ç½®åæ ‡
+--		txt, font, multi, limit, align		-- æ–‡æœ¬å†…å®¹ï¼Œå­—ä½“ï¼Œæ˜¯å¦å¤šè¡Œï¼Œé•¿åº¦é™åˆ¶ï¼Œå¯¹é½æ–¹å¼ï¼ˆ0ï¼šå·¦ï¼Œ1ï¼šä¸­ï¼Œ2ï¼šå³ï¼‰
+--		color, alpha			-- é¢œè‰²ï¼Œä¸é€æ˜åº¦
+--		checked				-- æ˜¯å¦å‹¾é€‰ï¼ŒCheckBox ä¸“ç”¨
+--		enable					-- æ˜¯å¦å¯ç”¨
+--		file, icon, type		-- å›¾ç‰‡æ–‡ä»¶åœ°å€ï¼Œå›¾æ ‡ç¼–å·ï¼Œç±»å‹
+--		group					-- å•é€‰æ¡†åˆ†ç»„è®¾ç½®
 -- }
--- ·µ»ØÖµ£ºÍ¨ÓÃµÄ  GUI ¶ÔÏó£¬¿ÉÖ±½Óµ÷ÓÃ·â×°·½·¨£¬Ê§°Ü»ò³ö´í·µ»Ø nil
--- ÌØ±ğ×¢Òâ£ºÎªÍ³Ò»½Ó¿Ú´Ëº¯ÊıÒ²¿ÉÓÃÓÚ AppendIni ÎÄ¼ş£¬²ÎÊıÓë GUI.AppendIni Ò»ÖÂ
+-- è¿”å›å€¼ï¼šé€šç”¨çš„  GUI å¯¹è±¡ï¼Œå¯ç›´æ¥è°ƒç”¨å°è£…æ–¹æ³•ï¼Œå¤±è´¥æˆ–å‡ºé”™è¿”å› nil
+-- ç‰¹åˆ«æ³¨æ„ï¼šä¸ºç»Ÿä¸€æ¥å£æ­¤å‡½æ•°ä¹Ÿå¯ç”¨äº AppendIni æ–‡ä»¶ï¼Œå‚æ•°ä¸ GUI.AppendIni ä¸€è‡´
 -- (class) GUI.Append(userdata hParent, string szIniFile, string szTag, string szName)
 function GUI.Append(hParent, szType, szName, tArg)
 	-- compatiable with AppendIni
@@ -3775,9 +3775,9 @@ function GUI.Append(hParent, szType, szName, tArg)
 end
 
 -- (class) GUI(...)
--- (class) GUI.Fetch(hRaw)						-- ½« hRaw Ô­Ê¼¶ÔÏó×ª»»Îª GUI ·â×°¶ÔÏó
--- (class) GUI.Fetch(hParent, szName)	-- ´Ó hParent ÖĞÌáÈ¡ÃûÎª szName µÄ×ÓÔª¼ş²¢×ª»»Îª GUI ¶ÔÏó
--- ·µ»ØÖµ£ºÍ¨ÓÃµÄ  GUI ¶ÔÏó£¬¿ÉÖ±½Óµ÷ÓÃ·â×°·½·¨£¬Ê§°Ü»ò³ö´í·µ»Ø nil
+-- (class) GUI.Fetch(hRaw)						-- å°† hRaw åŸå§‹å¯¹è±¡è½¬æ¢ä¸º GUI å°è£…å¯¹è±¡
+-- (class) GUI.Fetch(hParent, szName)	-- ä» hParent ä¸­æå–åä¸º szName çš„å­å…ƒä»¶å¹¶è½¬æ¢ä¸º GUI å¯¹è±¡
+-- è¿”å›å€¼ï¼šé€šç”¨çš„  GUI å¯¹è±¡ï¼Œå¯ç›´æ¥è°ƒç”¨å°è£…æ–¹æ³•ï¼Œå¤±è´¥æˆ–å‡ºé”™è¿”å› nil
 function GUI.Fetch(hParent, szName)
 	if type(hParent) == "string" then
 		hParent = Station.Lookup(hParent)
@@ -3834,7 +3834,7 @@ function GUI.RegisterPanel(szTitle, dwIcon, szClass, fn)
 	})
 end
 
--- ×ÖÌåÑ¡ÔñÆ÷
+-- å­—ä½“é€‰æ‹©å™¨
 function GUI.OpenFontTablePanel(fnAction)
 	local ui = GUI.CreateFrame("JH_FontTable", { w = 470, h = 370, title = g_tStrings.FONT, nStyle = 2 , close = true, focus = true }):BackGround(64, 64, 64)
 	ui:Setting(function()
@@ -3894,7 +3894,7 @@ function GUI.OpenFontTablePanel(fnAction)
 	LoadFontList("0")
 end
 
--- µ÷É«°å https://en.wikipedia.org/wiki/HSL_and_HSV
+-- è°ƒè‰²æ¿ https://en.wikipedia.org/wiki/HSL_and_HSV
 local COLOR_HUE = 0
 function GUI.OpenColorTablePanel(fnAction)
 	local fX, fY = Cursor.GetPos(true)
@@ -4016,7 +4016,7 @@ function GUI.OpenColorTablePanel(fnAction)
 end
 
 local ICON_PAGE
--- iconÑ¡ÔñÆ÷
+-- iconé€‰æ‹©å™¨
 function GUI.OpenIconPanel(fnAction)
 	local nMaxIocn, boxs, txts = 8587, {}, {}
 	local ui = GUI.CreateFrame("JH_IconPanel", { w = 920, h = 650, title = _L["Icon Picker"], nStyle = 2 , close = true, focus = true })
